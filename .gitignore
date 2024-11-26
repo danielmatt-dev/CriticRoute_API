@@ -1,0 +1,36 @@
+# Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__
+.pytest_cache/
+*.sqlite3
+*.db
+
+# Django
+*.log
+*.pot
+*.py[cod]
+*.bak
+*.swp
+*.swo
+*.pid
+db.sqlite3
+media
+static
+
+# PyCharm
+.idea/
+
+# Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+*.env
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
