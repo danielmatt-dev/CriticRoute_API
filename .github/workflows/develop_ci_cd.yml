@@ -33,17 +33,29 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # 4. Ejecutar pruebas
+      # 4. Configurar variables de entorno
+      - name: Setup environment variables
+        run: |
+          echo "DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}" >> .env
+          echo "DJANGO_DEBUG=${{ secrets.DJANGO_DEBUG }}" >> .env
+          echo "DJANGO_ALLOWED_HOSTS=${{ secrets.DJANGO_ALLOWED_HOSTS }}" >> .env
+          echo "POSTGRES_DATABASE=${{ secrets.POSTGRES_DATABASE }}" >> .env
+          echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> .env
+          echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
+          echo "POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}" >> .env
+          echo "POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}" >> .env
+
+      # 5. Ejecutar pruebas
       - name: Run tests
         run: |
           python manage.py test
 
-      # 5. Construir la imagen Docker
+      # 6. Construir la imagen Docker
       - name: Build Docker image
         run: |
           docker build -t ${{secrets.DOCKER_USER}}/app:develop .
           
-      # 6. Autenticarse en DockerHub
+      # 7. Autenticarse en DockerHub
       - name: Docker Login
         env:
           DOCKER_USER: ${{secrets.DOCKER_USER}}
@@ -51,7 +63,7 @@ jobs:
         run:   |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
 
-      # 7. Subir la imagen Docker
+      # 8. Subir la imagen Docker
       - name: Push Docker image
         run: |
           docker push ${{secrets.DOCKER_USER}}/criticroute_api:develop
