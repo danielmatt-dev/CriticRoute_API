@@ -6,9 +6,6 @@ on:
   push:
     tags:
       - 'v*'
-  pull_request:
-    branches:
-      - release/*
 
 jobs:
   release_ci_cd:
