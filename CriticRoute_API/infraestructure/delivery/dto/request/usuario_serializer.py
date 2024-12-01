@@ -4,6 +4,13 @@ from rest_framework import serializers
 
 class UsuarioSerializer(serializers.Serializer):
 
+    """
+    Serializador para la validación y deserialización de los datos del usuario.
+
+    Esta clase define las reglas para validar los campos como el correo, el nombre
+    de usuario y la contraseña, asegurando que cumplan con los requisitos establecidos.
+    """
+
     username = serializers.CharField(
         min_length=5,
         max_length=150,

@@ -5,6 +5,13 @@ from CriticRoute_API.infraestructure.delivery.dto.response.auth_token import Aut
 
 class MapperDtoImpl(MapperDto):
 
+    """
+    Implementación de la interfaz MapperDto.
+
+    Esta clase proporciona la implementación concreta de los métodos para convertir
+    los datos del serializer a objetos de entidad y crear tokens de autenticación.
+    """
+
     def to_usuario(self, data) -> Usuario:
         return Usuario(
             email=data['email'],

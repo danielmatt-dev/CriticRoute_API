@@ -146,6 +146,8 @@ REST_FRAMEWORK = {
     )
 }
 
+# Configuración de los tiempos de expiración de los tokens de autenticación
+# El tiempo de vida del token de acceso será de 4 días, y el del token de refresco será de 3 días.
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=4),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=3),
