@@ -8,7 +8,6 @@ from CriticRoute_API.src.core.entities.proyecto import Proyecto
 
 @dataclass
 class Tarea:
-
     """
     Clase que representa una tarea dentro de un proyecto. Contiene información sobre la tarea,
     como la duración, los tiempos optimista, probable y pesimista, y su estado.
@@ -100,7 +99,6 @@ class Tarea:
 
     @classmethod
     def empty(cls):
-
         """
         Método de clase que crea una tarea vacía con valores predeterminados.
 
@@ -128,17 +126,13 @@ class Tarea:
             estado=Estado.POR_INICIAR
         )
 
-    def calcular_duracion(self, num_decimales: int):
-
+    def calcular_duracion(self):
         """
         Método para calcular la duración de la tarea utilizando la fórmula de PERT.
-
-        Args:
-            num_decimales (int): Número de decimales para redondear el resultado.
 
         Returns:
             duracion (float): El valor del atributo `duracion` de la tarea.
         """
 
-        self.duracion = (
-            round(((self.tiempo_optimista + 4 * self.tiempo_probable + self.tiempo_pesimista) / 6), num_decimales))
+        self.duracion = round(((self.tiempo_optimista + 4 * self.tiempo_probable + self.tiempo_pesimista) / 6),
+                              self.proyecto.num_decimales)
