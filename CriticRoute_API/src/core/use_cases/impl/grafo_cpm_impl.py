@@ -10,8 +10,8 @@ from CriticRoute_API.src.core.use_cases.grafo_cpm import GrafoCPM
 class NodoTarea:
     def __init__(self, tarea: Tarea):
         self.tarea = tarea
-        self.padres = List[NodoTarea] = []
-        self.hijos = List[NodoTarea] = []
+        self.padres: List[NodoTarea] = []
+        self.hijos: List[NodoTarea] = []
 
 
 class GrafoCPMImpl(GrafoCPM):
@@ -31,7 +31,7 @@ class GrafoCPMImpl(GrafoCPM):
 
     def agregar_tarea(self, tarea: Tarea):
 
-        tarea.calcular_duracion(self.__proyecto.num_decimales)
+        tarea.calcular_duracion()
 
         # Verifica si la tarea ya está en el grafo
         if tarea.numero_tarea in self.__nodos:
