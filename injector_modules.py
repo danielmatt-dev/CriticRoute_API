@@ -6,7 +6,7 @@ from CriticRoute_API.src.core.use_cases.impl.crear_usuario_impl import CrearUsua
 from CriticRoute_API.src.core.use_cases.impl.verificar_existencia_correo_impl import VerificarExistenciaCorreoImpl
 from CriticRoute_API.src.core.use_cases.verificar_existencia_correo import VerificarExistenciaCorreo
 from CriticRoute_API.src.infraestructure.delivery.dto.mapper.mapper_dto import MapperDto
-from CriticRoute_API.src.infraestructure import MapperDtoImpl
+from CriticRoute_API.src.infraestructure.delivery.dto.mapper.mapper_dto_impl import MapperDtoImpl
 from CriticRoute_API.src.infraestructure.persistence.adapter.adapter import Adapter
 
 
