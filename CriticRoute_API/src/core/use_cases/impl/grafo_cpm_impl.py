@@ -1,10 +1,10 @@
 from datetime import timedelta
 from typing import List, Dict
 
-from CriticRoute_API.core.entities.proyecto import Proyecto
-from CriticRoute_API.core.entities.enums import UnidadTiempo
-from CriticRoute_API.core.entities.tarea import Tarea
-from CriticRoute_API.core.use_cases.grafo_cpm import GrafoCPM
+from CriticRoute_API.src.core.entities.proyecto import Proyecto
+from CriticRoute_API.src.core.entities.enums import UnidadTiempo
+from CriticRoute_API.src.core.entities.tarea import Tarea
+from CriticRoute_API.src.core.use_cases.grafo_cpm import GrafoCPM
 
 
 class NodoTarea:

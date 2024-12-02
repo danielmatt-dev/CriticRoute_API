@@ -1,10 +1,10 @@
 from injector import Injector
 from rest_framework.response import Response
 
-from CriticRoute_API.core.use_cases.crear_usuario import CrearUsuario
-from CriticRoute_API.core.use_cases.verificar_existencia_correo import VerificarExistenciaCorreo
-from CriticRoute_API.infraestructure.delivery.dto.mapper.mapper_dto import MapperDto
-from CriticRoute_API.infraestructure.delivery.views.views import post_crear_usuario
+from CriticRoute_API.src.core.use_cases.crear_usuario import CrearUsuario
+from CriticRoute_API.src.core.use_cases.verificar_existencia_correo import VerificarExistenciaCorreo
+from CriticRoute_API.src.infraestructure.delivery.dto.mapper.mapper_dto import MapperDto
+from CriticRoute_API.src.infraestructure.delivery.views.views import post_crear_usuario
 from injector_modules import AppModule
 
 

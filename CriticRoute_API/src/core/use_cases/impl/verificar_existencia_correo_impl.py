@@ -1,7 +1,7 @@
 from injector import inject
 
-from CriticRoute_API.core.port.repository import Repository
-from CriticRoute_API.core.use_cases.verificar_existencia_correo import VerificarExistenciaCorreo
+from CriticRoute_API.src.core.port.repository import Repository
+from CriticRoute_API.src.core.use_cases.verificar_existencia_correo import VerificarExistenciaCorreo
 
 
 # Implementación concreta del caso de uso para verificar existencia de correo.

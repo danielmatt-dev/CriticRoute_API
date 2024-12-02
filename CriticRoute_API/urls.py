@@ -2,8 +2,8 @@ from django.contrib import admin
 from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from CriticRoute_API.infraestructure.config.views_factory import post_crear_usuario_factory
-from CriticRoute_API.infraestructure.delivery.views.views import get_csrf_token
+from CriticRoute_API.src.infraestructure.config.views_factory import post_crear_usuario_factory
+from CriticRoute_API.src.infraestructure.delivery.views.views import get_csrf_token
 
 # Definición de la ruta base para las API
 api_path = 'api'

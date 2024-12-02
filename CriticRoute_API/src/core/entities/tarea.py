@@ -2,8 +2,8 @@ from dataclasses import dataclass
 from datetime import date
 from typing import Optional
 
-from CriticRoute_API.core.entities.enums import Estado
-from CriticRoute_API.core.entities.proyecto import Proyecto
+from CriticRoute_API.src.core.entities.enums import Estado
+from CriticRoute_API.src.core.entities.proyecto import Proyecto
 
 
 @dataclass

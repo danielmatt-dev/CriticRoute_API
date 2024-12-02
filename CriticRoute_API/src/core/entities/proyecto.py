@@ -2,8 +2,8 @@ from dataclasses import dataclass
 from datetime import date
 from typing import Optional
 
-from CriticRoute_API.core.entities.enums import UnidadTiempo
-from CriticRoute_API.core.entities.usuario import Usuario
+from CriticRoute_API.src.core.entities.enums import UnidadTiempo
+from CriticRoute_API.src.core.entities.usuario import Usuario
 
 
 @dataclass
