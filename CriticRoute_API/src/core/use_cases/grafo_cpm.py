@@ -1,7 +1,7 @@
 from abc import abstractmethod, ABC
 from typing import List
 
-from CriticRoute_API.core.entities.tarea import Tarea
+from CriticRoute_API.src.core.entities.tarea import Tarea
 
 
 class GrafoCPM(ABC):

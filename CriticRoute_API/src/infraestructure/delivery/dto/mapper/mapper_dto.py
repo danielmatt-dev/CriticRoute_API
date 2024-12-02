@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
-from CriticRoute_API.core.entities.usuario import Usuario
-from CriticRoute_API.infraestructure.delivery.dto.response.auth_token import AuthToken
+from CriticRoute_API.src.core.entities.usuario import Usuario
+from CriticRoute_API.src.infraestructure.delivery.dto.response.auth_token import AuthToken
 
 
 class MapperDto(ABC):

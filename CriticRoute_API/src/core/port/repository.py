@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 from rest_framework_simplejwt.tokens import Token
 
-from CriticRoute_API.core.entities.usuario import Usuario
+from CriticRoute_API.src.core.entities.usuario import Usuario
 
 
 # Interfaz abstracta para el repositorio de entre la capa de persistence y la capa de dominio.

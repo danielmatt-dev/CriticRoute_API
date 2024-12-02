@@ -5,8 +5,8 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from CriticRoute_API.infraestructure.delivery.dto.request.usuario_serializer import UsuarioSerializer
-from CriticRoute_API.infraestructure.delivery.dto.response.auth_token import AuthSerializer
+from CriticRoute_API.src.infraestructure.delivery.dto.request.usuario_serializer import UsuarioSerializer
+from CriticRoute_API.src.infraestructure.delivery.dto.response.auth_token import AuthSerializer
 
 
 @ensure_csrf_cookie

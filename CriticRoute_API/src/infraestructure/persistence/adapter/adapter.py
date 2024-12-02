@@ -1,8 +1,8 @@
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import Token, RefreshToken
 
-from CriticRoute_API.core.entities.usuario import Usuario
-from CriticRoute_API.core.port.repository import Repository
+from CriticRoute_API.src.core.entities.usuario import Usuario
+from CriticRoute_API.src.core.port.repository import Repository
 
 
 # Implementación del repositorio de autenticación usando Django ORM.
