@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Optional
 
 
 @dataclass
@@ -13,6 +14,7 @@ class Usuario:
         password (str): Contraseña del usuario.
     """
 
+    id_usuario: Optional[int]
     username: str
     email: str
     password: str

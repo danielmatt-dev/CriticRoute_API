@@ -1,9 +1,15 @@
 from dataclasses import dataclass
 from datetime import date
-from typing import Optional
+from typing import Optional, List
 
 from CriticRoute_API.src.core.entities.enums import Estado
 from CriticRoute_API.src.core.entities.proyecto import Proyecto
+
+
+@dataclass
+class Responsable:
+    id_responsable: Optional[int]
+    nombre: str
 
 
 @dataclass
@@ -30,6 +36,7 @@ class Tarea:
         - fecha_inicio (date): Fecha en la que realmente se inicia la tarea.
         - fecha_final (date): Fecha en la que se finaliza la tarea.
         - estado (Estado): Estado actual de la tarea (por iniciar, en progreso, terminado).
+        - responsables (List[Responsable]): Lista de responsables de la tarea
     """
 
     id_tarea: Optional[int]
@@ -48,6 +55,7 @@ class Tarea:
     final_tardio: float
     fecha_inicio: date
     fecha_final: date
+    responsables: List[Responsable]
     estado: Estado
 
     @classmethod
@@ -59,7 +67,8 @@ class Tarea:
             tiempo_optimista: float,
             tiempo_probable: float,
             tiempo_pesimista: float,
-            descripcion: str
+            descripcion: str,
+            responsables: List[Responsable]
     ):
         """
         Método de clase para crear una instancia de la tarea con parámetros básicos.
@@ -94,7 +103,8 @@ class Tarea:
             fecha_inicio=date(2024, 1, 1),
             fecha_final=date(2024, 1, 1),
             descripcion=descripcion,
-            estado=Estado.POR_INICIAR
+            estado=Estado.POR_INICIAR,
+            responsables=responsables
         )
 
     @classmethod
@@ -123,7 +133,8 @@ class Tarea:
             fecha_inicio=date(2024, 1, 1),
             fecha_final=date(2024, 1, 1),
             descripcion='',
-            estado=Estado.POR_INICIAR
+            estado=Estado.POR_INICIAR,
+            responsables=[]
         )
 
     def calcular_duracion(self):
@@ -136,3 +147,17 @@ class Tarea:
 
         self.duracion = round(((self.tiempo_optimista + 4 * self.tiempo_probable + self.tiempo_pesimista) / 6),
                               self.proyecto.num_decimales)
+
+
+@dataclass
+class TareaDependencia:
+    id_tarea_dependencia: Optional[int]
+    tarea_padre: Tarea
+    tarea_hijo: Tarea
+
+
+@dataclass
+class TareaResponsable:
+    id_tarea_responsable: Optional[int]
+    tarea: Tarea
+    responsable: Responsable
