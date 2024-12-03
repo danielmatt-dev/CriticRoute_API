@@ -13,7 +13,7 @@ class TestGrafoCPM(unittest.TestCase):
     def setUp(self):
         self.proyecto = Proyecto(
             id_proyecto=1,
-            usuario=Usuario(email='', password='', username=''),
+            usuario=Usuario(email='', password='', username='', id_usuario=None),
             titulo='Proyecto de prueba',
             descripcion='',
             fecha_inicio=date(2024, 11, 21),
@@ -30,7 +30,8 @@ class TestGrafoCPM(unittest.TestCase):
             tiempo_optimista=5,
             tiempo_probable=7,
             tiempo_pesimista=10,
-            descripcion=''
+            descripcion='',
+            responsables=[]
         )
 
         self.tarea2 = Tarea.from_basic(
@@ -40,7 +41,8 @@ class TestGrafoCPM(unittest.TestCase):
             tiempo_optimista=4,
             tiempo_probable=6,
             tiempo_pesimista=8,
-            descripcion=''
+            descripcion='',
+            responsables=[]
         )
 
         self.tarea3 = Tarea.from_basic(
@@ -51,6 +53,7 @@ class TestGrafoCPM(unittest.TestCase):
             tiempo_probable=7,
             tiempo_pesimista=10,
             descripcion="Fase de pruebas",
+            responsables=[]
         )
 
         self.tarea4 = Tarea.from_basic(
@@ -60,7 +63,8 @@ class TestGrafoCPM(unittest.TestCase):
             tiempo_optimista=5,
             tiempo_probable=7,
             tiempo_pesimista=10,
-            descripcion="Primera fase del proyecto"
+            descripcion="Primera fase del proyecto",
+            responsables=[]
         )
 
         self.tarea5 = Tarea.from_basic(
@@ -70,7 +74,8 @@ class TestGrafoCPM(unittest.TestCase):
             tiempo_optimista=5,
             tiempo_probable=7,
             tiempo_pesimista=10,
-            descripcion="Primera fase del proyecto"
+            descripcion="Primera fase del proyecto",
+            responsables=[]
         )
 
         self.tarea6 = Tarea.from_basic(
@@ -80,7 +85,8 @@ class TestGrafoCPM(unittest.TestCase):
             tiempo_optimista=5,
             tiempo_probable=7,
             tiempo_pesimista=10,
-            descripcion="Primera fase del proyecto"
+            descripcion="Primera fase del proyecto",
+            responsables=[]
         )
 
         self.tarea7 = Tarea.from_basic(
@@ -90,7 +96,8 @@ class TestGrafoCPM(unittest.TestCase):
             tiempo_optimista=6,
             tiempo_probable=9,
             tiempo_pesimista=12,
-            descripcion=''
+            descripcion='',
+            responsables=[]
         )
 
         self.tarea8 = Tarea.from_basic(
@@ -100,7 +107,8 @@ class TestGrafoCPM(unittest.TestCase):
             tiempo_optimista=6,
             tiempo_probable=9,
             tiempo_pesimista=12,
-            descripcion=''
+            descripcion='',
+            responsables=[]
         )
 
         self.tarea9 = Tarea.from_basic(
@@ -110,7 +118,8 @@ class TestGrafoCPM(unittest.TestCase):
             tiempo_optimista=5,
             tiempo_probable=7,
             tiempo_pesimista=10,
-            descripcion=''
+            descripcion='',
+            responsables=[]
         )
 
         self.tarea10 = Tarea.from_basic(
@@ -120,7 +129,8 @@ class TestGrafoCPM(unittest.TestCase):
             tiempo_optimista=6,
             tiempo_probable=9,
             tiempo_pesimista=12,
-            descripcion=''
+            descripcion='',
+            responsables=[]
         )
 
         self.tarea11 = Tarea.from_basic(
@@ -130,7 +140,8 @@ class TestGrafoCPM(unittest.TestCase):
             tiempo_optimista=5,
             tiempo_probable=7,
             tiempo_pesimista=10,
-            descripcion=''
+            descripcion='',
+            responsables=[]
         )
 
         self.tarea12 = Tarea.from_basic(
@@ -140,7 +151,8 @@ class TestGrafoCPM(unittest.TestCase):
             tiempo_optimista=28,
             tiempo_probable=31,
             tiempo_pesimista=34,
-            descripcion=''
+            descripcion='',
+            responsables=[]
         )
 
         self.tarea13 = Tarea.from_basic(
@@ -150,7 +162,8 @@ class TestGrafoCPM(unittest.TestCase):
             tiempo_optimista=26,
             tiempo_probable=30,
             tiempo_pesimista=34,
-            descripcion=''
+            descripcion='',
+            responsables=[]
         )
 
         self.tarea14 = Tarea.from_basic(
@@ -160,7 +173,8 @@ class TestGrafoCPM(unittest.TestCase):
             tiempo_optimista=5,
             tiempo_probable=7,
             tiempo_pesimista=10,
-            descripcion=''
+            descripcion='',
+            responsables=[]
         )
 
         self.tarea15 = Tarea.from_basic(
@@ -170,7 +184,8 @@ class TestGrafoCPM(unittest.TestCase):
             tiempo_optimista=6,
             tiempo_probable=9,
             tiempo_pesimista=12,
-            descripcion=''
+            descripcion='',
+            responsables=[]
         )
 
         self.tarea16 = Tarea.from_basic(
@@ -180,7 +195,8 @@ class TestGrafoCPM(unittest.TestCase):
             tiempo_optimista=6,
             tiempo_probable=9,
             tiempo_pesimista=12,
-            descripcion=''
+            descripcion='',
+            responsables=[]
         )
 
         self.tarea17 = Tarea.from_basic(
@@ -190,7 +206,8 @@ class TestGrafoCPM(unittest.TestCase):
             tiempo_optimista=5,
             tiempo_probable=7,
             tiempo_pesimista=10,
-            descripcion=''
+            descripcion='',
+            responsables=[]
         )
 
         self.tarea21 = Tarea.from_basic(
@@ -200,7 +217,8 @@ class TestGrafoCPM(unittest.TestCase):
             tiempo_optimista=1,
             tiempo_probable=2,
             tiempo_pesimista=3,
-            descripcion=''
+            descripcion='',
+            responsables=[]
         )
 
         self.tarea22 = Tarea.from_basic(
@@ -210,7 +228,8 @@ class TestGrafoCPM(unittest.TestCase):
             tiempo_optimista=1,
             tiempo_probable=2,
             tiempo_pesimista=3,
-            descripcion=''
+            descripcion='',
+            responsables=[]
         )
 
         self.grafo = GrafoCPMImpl(self.proyecto)
