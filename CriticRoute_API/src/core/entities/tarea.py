@@ -148,6 +148,13 @@ class Tarea:
         self.duracion = round(((self.tiempo_optimista + 4 * self.tiempo_probable + self.tiempo_pesimista) / 6),
                               self.proyecto.num_decimales)
 
+    def __hash__(self):
+        return hash(self.numero_tarea)
+
+    def __eq__(self, other):
+        if isinstance(other, Tarea):
+            return self.numero_tarea == other.numero_tarea
+        return False
 
 @dataclass
 class TareaDependencia:

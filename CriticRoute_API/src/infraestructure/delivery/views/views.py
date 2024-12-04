@@ -1,12 +1,21 @@
+import base64
+
 from django.middleware.csrf import get_token
 from django.views.decorators.csrf import ensure_csrf_cookie
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
+from CriticRoute_API.src.core.use_cases.buscar_proyecto_por_id import BuscarProyectoPorId
+from CriticRoute_API.src.core.use_cases.buscar_proyectos import BuscarProyectos
+from CriticRoute_API.src.core.use_cases.generar_cpm import GenerarCPM
+from CriticRoute_API.src.core.use_cases.guardar_grafo_cpm import GuardarGrafoCPM
+from CriticRoute_API.src.infraestructure.delivery.dto.mapper.mapper_dto import MapperDto
+from CriticRoute_API.src.infraestructure.delivery.dto.request.proyecto_serializer import ProyectoSerializer
 from CriticRoute_API.src.infraestructure.delivery.dto.request.usuario_serializer import UsuarioSerializer
 from CriticRoute_API.src.infraestructure.delivery.dto.response.auth_token import AuthSerializer
+from CriticRoute_API.src.infraestructure.delivery.dto.response.dtos import ProyectoDTOSerializer
 
 
 @ensure_csrf_cookie
@@ -54,6 +63,68 @@ def post_crear_usuario(request, verificar_usuario, crear_cuenta, mapper_dto):
     response = Response(auth_serializer.data, status=status.HTTP_201_CREATED)
     response['X-CSRFToken'] = get_token(request)  # Incluye el token CSRF en la respuesta
     return response
+
+
+@ensure_csrf_cookie
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def post_nuevo_proyecto(request, generar_grafo: GenerarCPM, guardar_grafo: GuardarGrafoCPM):
+
+    # Deserializa los datos de la solicitud
+    proyecto_serializer = ProyectoSerializer(data=request.data)
+
+    # Verifica si los datos del proyecto son válidos
+    if not proyecto_serializer.is_valid():
+        return Response(proyecto_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    usuario = request.user
+
+    # Verifica si el archivo está presente en los datos de la solicitud
+    if not proyecto_serializer.validated_data['file_bytes']:
+        return Response({'error': 'Archivo no encontrado'}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+
+        # Decodifica el archivo base64 que contiene los datos PERT
+        file_byte = base64.b64decode(proyecto_serializer.validated_data['file_bytes'])
+
+        nodos = generar_grafo.execute(
+            file_bytes=file_byte,
+            titulo=proyecto_serializer.validated_data['titulo'],
+            descripcion=proyecto_serializer.validated_data['descripcion'],
+            usuario=usuario
+        )
+
+        guardar_grafo.execute(nodos)
+
+        return Response({'message': 'Proyecto guardado con éxito'}, status=status.HTTP_201_CREATED)
+
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_buscar_proyectos(request, buscar_proyectos: BuscarProyectos, mapper_dto: MapperDto):
+
+    proyectos = buscar_proyectos.execute(request.user)
+    response = mapper_dto.to_list_proyecto_dto(proyectos)
+    serialized_data = ProyectoDTOSerializer(response, many=True).data
+
+    return Response(serialized_data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_buscar_proyecto_id(request, id_proyecto: int, buscar_proyecto_por_id: BuscarProyectoPorId):
+    proyecto = buscar_proyecto_por_id.execute(id_proyecto)
+
+    if proyecto is None:
+        return Response({'message': 'Proyecto no encontrado'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = ProyectoDTOSerializer(proyecto).data
+
+    return Response(serializer, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])

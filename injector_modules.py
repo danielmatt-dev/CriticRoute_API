@@ -5,12 +5,18 @@ from CriticRoute_API.src.core.port.repository import Repository
 from CriticRoute_API.src.core.use_cases.buscar_proyecto_por_id import BuscarProyectoPorId
 from CriticRoute_API.src.core.use_cases.buscar_proyectos import BuscarProyectos
 from CriticRoute_API.src.core.use_cases.crear_usuario import CrearUsuario
+from CriticRoute_API.src.core.use_cases.generar_cpm import GenerarCPM
+from CriticRoute_API.src.core.use_cases.grafo_cpm import GrafoCPM
 from CriticRoute_API.src.core.use_cases.guardar_grafo_cpm import GuardarGrafoCPM
 from CriticRoute_API.src.core.use_cases.impl.buscar_proyecto_por_id_impl import BuscarProyectoPorIdImpl
 from CriticRoute_API.src.core.use_cases.impl.buscar_proyectos_impl import BuscarProyectosImpl
 from CriticRoute_API.src.core.use_cases.impl.crear_usuario_impl import CrearUsuarioImpl
+from CriticRoute_API.src.core.use_cases.impl.generar_cpm_impl import GenerarCPMImpl
+from CriticRoute_API.src.core.use_cases.impl.grafo_cpm_impl import GrafoCPMImpl
 from CriticRoute_API.src.core.use_cases.impl.guardar_grafo_cpm_impl import GuardarGrafoCPMImpl
+from CriticRoute_API.src.core.use_cases.impl.procesador_excel_impl import ProcesadorExcelImpl
 from CriticRoute_API.src.core.use_cases.impl.verificar_existencia_correo_impl import VerificarExistenciaCorreoImpl
+from CriticRoute_API.src.core.use_cases.procesador_excel import ProcesadorExcel
 from CriticRoute_API.src.core.use_cases.verificar_existencia_correo import VerificarExistenciaCorreo
 from CriticRoute_API.src.infraestructure.delivery.dto.mapper.mapper_dto import MapperDto
 from CriticRoute_API.src.infraestructure.delivery.dto.mapper.mapper_dto_impl import MapperDtoImpl
@@ -32,7 +38,7 @@ class AppModule(Module):
 
     @singleton
     @provider
-    def mapper(self) -> Mapper:
+    def provide_mapper(self) -> Mapper:
         """
         Proporciona una instancia del Mapper, encargado de mapear entidades a DTOs (Data Transfer Objects)
         y viceversa.
@@ -63,7 +69,7 @@ class AppModule(Module):
         Returns:
             ProyectoRepository: Una instancia del repositorio para proyectos.
         """
-        return ProyectoAdapter()
+        return ProyectoAdapter(self.provide_mapper())
 
     @singleton
     @provider
@@ -96,7 +102,7 @@ class AppModule(Module):
         Returns:
             GuardarGrafoCPM: Una instancia del servicio para guardar el grafo CPM.
         """
-        return GuardarGrafoCPMImpl(self.provide_repository)
+        return GuardarGrafoCPMImpl(self.provide_proyecto_repository())
 
     @singleton
     @provider
@@ -107,7 +113,7 @@ class AppModule(Module):
         Returns:
             BuscarProyectos: Instancia de BuscarProyectosImpl.
         """
-        return BuscarProyectosImpl(self.provide_repository)
+        return BuscarProyectosImpl(self.provide_proyecto_repository())
 
     @singleton
     @provider
@@ -118,7 +124,22 @@ class AppModule(Module):
         Returns:
             BuscarProyectoPorId: Instancia de BuscarProyectoPorIdImpl.
         """
-        return BuscarProyectoPorIdImpl(self.provide_repository)
+        return BuscarProyectoPorIdImpl(self.provide_proyecto_repository())
+
+    @singleton
+    @provider
+    def provider_procesador_excel(self) -> ProcesadorExcel:
+        return ProcesadorExcelImpl()
+
+    @singleton
+    @provider
+    def provider_grafo_cpm(self) -> GrafoCPM:
+        return GrafoCPMImpl()
+
+    @singleton
+    @provider
+    def provider_generar_cpm(self) -> GenerarCPM:
+        return GenerarCPMImpl(self.provider_grafo_cpm(), self.provider_procesador_excel())
 
     @singleton
     @provider

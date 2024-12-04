@@ -1,7 +1,10 @@
 from abc import ABC, abstractmethod
+from typing import List
 
+from CriticRoute_API.src.core.entities.proyecto import Proyecto
 from CriticRoute_API.src.core.entities.usuario import Usuario
 from CriticRoute_API.src.infraestructure.delivery.dto.response.auth_token import AuthToken
+from CriticRoute_API.src.infraestructure.delivery.dto.response.dtos import ProyectoDTO
 
 
 class MapperDto(ABC):
@@ -36,5 +39,32 @@ class MapperDto(ABC):
 
         Returns:
             AuthToken: Un objeto AuthToken con los valores refresh y access.
+        """
+        pass
+
+    @abstractmethod
+    def to_proyecto_dto(self, proyecto: Proyecto) -> ProyectoDTO:
+        """
+        Método abstracto que debe ser implementado para convertir un objeto `Proyecto` a un DTO `ProyectoDTO`.
+
+        Args:
+            proyecto (Proyecto): El objeto `Proyecto` a transformar.
+
+        Returns:
+            ProyectoDTO: El objeto DTO que representa el `Proyecto`.
+        """
+        pass
+
+    @abstractmethod
+    def to_list_proyecto_dto(self, proyectos: List[Proyecto]) -> List[ProyectoDTO]:
+        """
+        Método abstracto que debe ser implementado para convertir una lista de objetos `Proyecto`
+        a una lista de DTOs `ProyectoDTO`.
+
+        Args:
+            proyectos (List[Proyecto]): Lista de objetos `Proyecto` a transformar.
+
+        Returns:
+            List[ProyectoDTO]: Lista de objetos `ProyectoDTO` que representan los `Proyecto` de entrada.
         """
         pass

@@ -1,8 +1,9 @@
 from abc import ABC, abstractmethod
 from typing import List
 
+from django.contrib.auth.models import User
+
 from CriticRoute_API.src.core.entities.proyecto import Proyecto
-from CriticRoute_API.src.core.entities.usuario import Usuario
 
 
 class BuscarProyectos(ABC):
@@ -12,7 +13,7 @@ class BuscarProyectos(ABC):
     """
 
     @abstractmethod
-    def execute(self, usuario: Usuario) -> List[Proyecto]:
+    def execute(self, usuario: User) -> List[Proyecto]:
         """
         Ejecuta la lógica de negocio para obtener todos los proyectos asociados a un usuario específico.
 
@@ -20,7 +21,7 @@ class BuscarProyectos(ABC):
         que consultará la base de datos y devolverá una lista de proyectos.
 
         Args:
-            usuario (Usuario): El usuario cuyo proyectos deben ser obtenidos.
+            usuario (User): El usuario cuyo proyectos deben ser obtenidos.
 
         Returns:
             List[Proyecto]: Una lista de proyectos asociados al usuario.

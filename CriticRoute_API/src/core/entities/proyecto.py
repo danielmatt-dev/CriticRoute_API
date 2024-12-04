@@ -2,8 +2,9 @@ from dataclasses import dataclass
 from datetime import date
 from typing import Optional
 
+from django.contrib.auth.models import User
+
 from CriticRoute_API.src.core.entities.enums import UnidadTiempo
-from CriticRoute_API.src.core.entities.usuario import Usuario
 
 
 @dataclass
@@ -15,7 +16,7 @@ class Proyecto:
 
     Atributos:
         - id_proyecto (Optional[int]): Identificador único del proyecto (opcional).
-        - usuario (Usuario): Usuario asociado al proyecto.
+        - usuario (User): Usuario asociado al proyecto.
         - titulo (str): Título del proyecto.
         - descripcion (str): Descripción detallada del proyecto.
         - fecha_inicio (date): Fecha de inicio del proyecto.
@@ -26,7 +27,7 @@ class Proyecto:
     """
 
     id_proyecto: Optional[int]
-    usuario: Usuario
+    usuario: User
     titulo: str
     descripcion: str
     fecha_inicio: date
@@ -34,3 +35,17 @@ class Proyecto:
     horas_trabajo_dia: int
     num_decimales: int
     estado: str
+
+    @classmethod
+    def empty(cls, usuario: User):
+        return cls(
+            id_proyecto=None,
+            usuario=usuario,
+            titulo='',
+            descripcion='',
+            fecha_inicio=date(2024, 1, 1),
+            unidad_tiempo=UnidadTiempo.DIAS,
+            horas_trabajo_dia=0,
+            num_decimales=2,
+            estado='Habilitado'
+        )

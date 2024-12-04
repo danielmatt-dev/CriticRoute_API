@@ -232,7 +232,8 @@ class TestGrafoCPM(unittest.TestCase):
             responsables=[]
         )
 
-        self.grafo = GrafoCPMImpl(self.proyecto)
+        self.grafo = GrafoCPMImpl()
+        self.grafo.set_proyecto(proyecto=self.proyecto)
 
         self.grafo.agregar_tarea(self.tarea1)
         self.grafo.agregar_tarea(self.tarea2)
