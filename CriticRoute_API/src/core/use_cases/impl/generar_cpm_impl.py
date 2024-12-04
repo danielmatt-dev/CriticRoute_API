@@ -9,13 +9,13 @@ from CriticRoute_API.src.core.entities.tarea import Tarea, Responsable
 from CriticRoute_API.src.core.use_cases.generar_cpm import GenerarCPM
 from CriticRoute_API.src.core.use_cases.grafo_cpm import GrafoCPM
 from CriticRoute_API.src.core.use_cases.impl.grafo_cpm_impl import NodoTarea
-from CriticRoute_API.src.core.use_cases.impl.procesador_excel_impl import ProcesadorExcelImpl
+from CriticRoute_API.src.core.use_cases.procesador_excel import ProcesadorExcel
 
 
 class GenerarCPMImpl(GenerarCPM):
 
     @inject
-    def __init__(self, grafo_cpm: GrafoCPM, procesar_excel: ProcesadorExcelImpl):
+    def __init__(self, grafo_cpm: GrafoCPM, procesar_excel: ProcesadorExcel):
         self._grafo_cpm = grafo_cpm
         self._procesar_excel = procesar_excel
 

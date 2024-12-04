@@ -137,21 +137,15 @@ class ProyectoAdapter(ProyectoRepository):
 
         ProyectoModel.save(proyecto_model)
 
-        print(proyecto_model)
-
         return self._mapper.to_proyecto(proyecto_model)
 
     def guardar_tareas(self, tareas: List[Tarea]) -> List[Tarea]:
 
-        print('Guardando tasks')
         # Convierte las tareas en modelos para persistirlas en la base de datos
         models = self._mapper.to_list_tarea_model(tareas)
 
-        print('A guardar')
         # Realiza la inserción masiva de las tareas en la base de datos
         TareaModel.objects.bulk_create(models)
-
-        print(models)
 
         # Obtiene las tareas guardadas, filtradas por el proyecto correspondiente
         tasks = TareaModel.objects.filter(proyecto=models[0].proyecto)

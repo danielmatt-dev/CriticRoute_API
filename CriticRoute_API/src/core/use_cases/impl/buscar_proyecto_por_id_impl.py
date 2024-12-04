@@ -28,8 +28,6 @@ class BuscarProyectoPorIdImpl(BuscarProyectoPorId):
         # Recupera los responsables de las tareas dentro del proyecto
         tareas_responsable = self._repository.buscar_tareas_responsables(id_proyecto)
 
-        print(proyecto)
-
         # Se inicializa el DTO del proyecto con la información básica
         dto = ProyectoDTO(
             id_proyecto=proyecto.id_proyecto,
