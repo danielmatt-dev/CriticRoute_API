@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from CriticRoute_API.src.infraestructure.config.views_factory import post_crear_usuario_factory
@@ -25,4 +25,7 @@ urlpatterns = [
 
     # Ruta para refrescar el token de acceso utilizando el token de refresco
     path(f'{api_path}/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
+    # Ruta para incluir las rutas de la aplicación `CriticRoute_API`, dentro de la estructura de la aplicación
+    path(f'{api_path}/', include('CriticRoute_API.src.infraestructure.delivery.views.urls'))
 ]

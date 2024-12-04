@@ -1,12 +1,37 @@
 from abc import ABC, abstractmethod
-from typing import List
+from typing import List, Optional, Dict
 
+from django.contrib.auth.models import User
+
+from CriticRoute_API.src.core.entities.nodo_tarea import NodoTarea
 from CriticRoute_API.src.core.entities.proyecto import Proyecto
 from CriticRoute_API.src.core.entities.tarea import Tarea, TareaDependencia, TareaResponsable, Responsable
-from CriticRoute_API.src.core.entities.usuario import Usuario
 
 
 class ProyectoRepository(ABC):
+
+    @abstractmethod
+    def guardar_proyecto(self, proyecto: Proyecto) -> Proyecto:
+        """
+        Guarda un proyecto en la base de datos. Si el proyecto ya existe, lo actualiza.
+
+        Args:
+            proyecto (Proyecto): El proyecto a guardar o actualizar.
+
+        Returns:
+            Proyecto: El proyecto almacenado o actualizado, con los ID generados o modificados.
+        """
+        pass
+
+    @abstractmethod
+    def guardar_cpm(self, nodos: Dict[int, NodoTarea]):
+        """
+        Guarda el grafo de tareas de un proyecto, representado por los nodos del CPM (Critical Path Method).
+
+        Args:
+            nodos (Dict[int, NodoTarea]): Diccionario que contiene los nodos de las tareas del proyecto.
+        """
+        pass
 
     @abstractmethod
     def guardar_tareas(self, tareas: List[Tarea]) -> List[Tarea]:
@@ -55,12 +80,12 @@ class ProyectoRepository(ABC):
         pass
 
     @abstractmethod
-    def buscar_proyectos(self, usuario: Usuario) -> List[Proyecto]:
+    def buscar_proyectos(self, usuario: User) -> List[Proyecto]:
         """
         Busca los proyectos asociados a un usuario determinado.
 
         Args:
-            usuario (Usuario): El usuario cuya lista de proyectos se quiere obtener.
+            usuario (User): El usuario cuya lista de proyectos se quiere obtener.
 
         Returns:
             List[Proyecto]: Una lista de entidades Proyecto asociadas al usuario.
@@ -94,7 +119,7 @@ class ProyectoRepository(ABC):
         pass
 
     @abstractmethod
-    def buscar_proyecto_por_id(self, id_proyecto: int) -> Proyecto:
+    def buscar_proyecto_por_id(self, id_proyecto: int) -> Optional[Proyecto]:
         """
         Busca un proyecto por su identificador único (id_proyecto) y lo convierte en una entidad de Proyecto.
 
@@ -102,6 +127,6 @@ class ProyectoRepository(ABC):
             id_proyecto (int): El identificador único del proyecto que se desea buscar.
 
         Returns:
-            Proyecto: Una instancia de la entidad Proyecto, mapeada desde el modelo de datos.
+            Optional[Proyecto]: Una instancia de la entidad Proyecto, mapeada desde el modelo de datos.
         """
         pass

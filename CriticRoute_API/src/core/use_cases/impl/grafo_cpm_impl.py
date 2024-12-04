@@ -1,26 +1,21 @@
 from datetime import timedelta
-from typing import List, Dict
+from typing import List, Dict, Optional
 
+from CriticRoute_API.src.core.entities.nodo_tarea import NodoTarea
 from CriticRoute_API.src.core.entities.proyecto import Proyecto
 from CriticRoute_API.src.core.entities.enums import UnidadTiempo
 from CriticRoute_API.src.core.entities.tarea import Tarea
 from CriticRoute_API.src.core.use_cases.grafo_cpm import GrafoCPM
 
 
-class NodoTarea:
-    def __init__(self, tarea: Tarea):
-        self.tarea = tarea
-        self.padres: List[NodoTarea] = []
-        self.hijos: List[NodoTarea] = []
-
-
 class GrafoCPMImpl(GrafoCPM):
 
-    def __init__(self, proyecto: Proyecto):
+    def __init__(self):
+        super().__init__()
         self.__nodos: Dict[int, NodoTarea] = {}
         self.__tarea_inicial = NodoTarea(Tarea.empty())
         self.__tarea_final = NodoTarea(Tarea.empty())
-        self.__proyecto = proyecto
+        self.__proyecto = None
 
         # Configurar tarea inicial
         self.__tarea_inicial.tarea.numero_tarea = 0
@@ -28,6 +23,12 @@ class GrafoCPMImpl(GrafoCPM):
         self.__tarea_inicial.tarea.inicio_temprano = 0
         self.__tarea_inicial.tarea.final_temprano = 0
         self.__tarea_inicial.tarea.duracion = 0
+
+    def get_proyecto(self) -> Optional[Proyecto]:
+        return self.__proyecto
+
+    def set_proyecto(self, proyecto: Proyecto):
+        self.__proyecto = proyecto
 
     def agregar_tarea(self, tarea: Tarea):
 
@@ -197,3 +198,13 @@ class GrafoCPMImpl(GrafoCPM):
                 for nodo in
                 self.__nodos.values()
                 if nodo.tarea.holgura == 0]
+
+    def get_nodos(self) -> Dict[int, NodoTarea]:
+
+        self.__tarea_inicial.tarea.proyecto = self.__proyecto
+        self.__tarea_final.tarea.proyecto = self.__proyecto
+
+        self.__nodos[self.__tarea_inicial.tarea.numero_tarea] = self.__tarea_inicial
+        self.__nodos[self.__tarea_final.tarea.numero_tarea] = self.__tarea_final
+
+        return dict(sorted(self.__nodos.items()))

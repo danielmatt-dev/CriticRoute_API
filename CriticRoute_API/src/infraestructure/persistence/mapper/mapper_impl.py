@@ -25,7 +25,6 @@ class MapperImpl(Mapper):
 
     def to_usuario_model(self, entity: Usuario) -> User:
         return User(
-            id=entity.id_usuario,
             username=entity.username,
             email=entity.email,
             password=entity.password
@@ -34,7 +33,7 @@ class MapperImpl(Mapper):
     def to_proyecto(self, model: ProyectoModel) -> Proyecto:
         return Proyecto(
             id_proyecto=model.id_proyecto,
-            usuario=self.to_usuario(model.usuario),
+            usuario=model.usuario,
             titulo=model.titulo,
             descripcion=model.descripcion,
             fecha_inicio=model.fecha_inicio,
@@ -46,12 +45,11 @@ class MapperImpl(Mapper):
 
     def to_proyecto_model(self, entity: Proyecto) -> ProyectoModel:
         return ProyectoModel(
-            id=entity.id_proyecto,
-            usuario=self.to_usuario_model(entity.usuario),
+            usuario=entity.usuario,
             titulo=entity.titulo,
             descripcion=entity.descripcion,
             fecha_inicio=entity.fecha_inicio,
-            unidad_tiempo=entity.unidad_tiempo.name,
+            unidad_tiempo=entity.unidad_tiempo.value,
             horas_trabajo_dia=entity.horas_trabajo_dia,
             num_decimales=entity.num_decimales,
             estado=entity.estado
@@ -81,7 +79,6 @@ class MapperImpl(Mapper):
 
     def to_tarea_model(self, entity: Tarea) -> TareaModel:
         return TareaModel(
-            id=entity.id_tarea,
             numero_tarea=entity.numero_tarea,
             proyecto=self.to_proyecto_model(entity.proyecto),
             accion=entity.accion,
@@ -97,7 +94,7 @@ class MapperImpl(Mapper):
             final_tardio=entity.final_tardio,
             fecha_inicio=entity.fecha_inicio,
             fecha_final=entity.fecha_final,
-            estado=entity.estado.name
+            estado=entity.estado.value
         )
 
     def to_list_tarea_model(self, entities: List[Tarea]) -> List[TareaModel]:
@@ -115,7 +112,6 @@ class MapperImpl(Mapper):
 
     def to_tarea_dependencia_model(self, entity: TareaDependencia) -> TareaDependenciaModel:
         return TareaDependenciaModel(
-            id_tarea_dependencia=entity.id_tarea_dependencia,
             tarea_padre=self.to_tarea_model(entity.tarea_padre),
             tarea_hijo=self.to_tarea_model(entity.tarea_hijo)
         )
@@ -128,7 +124,6 @@ class MapperImpl(Mapper):
 
     def to_responsable_model(self, entity: Responsable) -> ResponsableModel:
         return ResponsableModel(
-            id_responsable=entity.id_responsable,
             nombre=entity.nombre
         )
 
@@ -141,7 +136,6 @@ class MapperImpl(Mapper):
 
     def to_tarea_responsable_model(self, entity: TareaResponsable) -> TareaResponsableModel:
         return TareaResponsableModel(
-            id_tarea_responsable=entity.id_tarea_responsable,
             tarea=self.to_tarea_model(entity.tarea),
             responsable=self.to_responsable_model(entity.responsable)
         )

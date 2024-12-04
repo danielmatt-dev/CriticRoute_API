@@ -1,4 +1,4 @@
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Optional
 
 from injector import inject
 
@@ -14,16 +14,21 @@ class BuscarProyectoPorIdImpl(BuscarProyectoPorId):
     def __init__(self, repository: ProyectoRepository):
         self._repository = repository
 
-    def execute(self, id_proyecto: int) -> ProyectoDTO:
+    def execute(self, id_proyecto: int) -> Optional[ProyectoDTO]:
 
         # Recupera el proyecto desde el repositorio usando el ID
         proyecto = self._repository.buscar_proyecto_por_id(id_proyecto)
+
+        if proyecto is None:
+            return None
 
         # Recupera las dependencias de tareas relacionadas con el proyecto
         dependencias = self._repository.buscar_tareas_dependencias(id_proyecto)
 
         # Recupera los responsables de las tareas dentro del proyecto
         tareas_responsable = self._repository.buscar_tareas_responsables(id_proyecto)
+
+        print(proyecto)
 
         # Se inicializa el DTO del proyecto con la información básica
         dto = ProyectoDTO(

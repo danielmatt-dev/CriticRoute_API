@@ -9,8 +9,8 @@ class UnidadTiempo(Enum):
         - HORAS: Representa la unidad de tiempo en horas.
         - DIAS: Representa la unidad de tiempo en días.
     """
-    HORAS = 'horas'
-    DIAS = 'dias'
+    HORAS = 'Horas'
+    DIAS = 'Dias'
 
 
 class Estado(Enum):
@@ -22,6 +22,6 @@ class Estado(Enum):
         - EN_PROGRESO: La tarea está siendo ejecutada.
         - TERMINADO: La tarea ha sido completada.
     """
-    POR_INICIAR = 'Por iniciar'
+    POR_INICIAR = 'Pendiente'
     EN_PROGRESO = 'En progreso'
-    TERMINADO = 'Terminado'
+    TERMINADO = 'Completada'

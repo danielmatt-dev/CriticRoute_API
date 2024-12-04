@@ -1,7 +1,9 @@
 from abc import abstractmethod, ABC
-from typing import List
+from typing import List, Optional, Dict
 
+from CriticRoute_API.src.core.entities.proyecto import Proyecto
 from CriticRoute_API.src.core.entities.tarea import Tarea
+from CriticRoute_API.src.core.entities.nodo_tarea import NodoTarea
 
 
 class GrafoCPM(ABC):
@@ -16,6 +18,14 @@ class GrafoCPM(ABC):
         - calcular_cpm: Calcula los tiempos tempranos y tardíos de las tareas y la ruta crítica.
         - buscar_ruta_critica: Devuelve la lista de tareas que forman la ruta crítica.
     """
+
+    @abstractmethod
+    def get_proyecto(self) -> Optional[Proyecto]:
+        pass
+
+    @abstractmethod
+    def set_proyecto(self, proyecto: Proyecto):
+        pass
 
     @abstractmethod
     def agregar_tarea(self, tarea: Tarea):
@@ -73,4 +83,8 @@ class GrafoCPM(ABC):
         Returns:
             List[Tarea]: Lista de tareas que forman la ruta crítica.
         """
+        pass
+
+    @abstractmethod
+    def get_nodos(self) -> Dict[int, NodoTarea]:
         pass
