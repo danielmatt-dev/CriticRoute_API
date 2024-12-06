@@ -6,6 +6,7 @@ from injector import inject
 from CriticRoute_API.src.core.entities.enums import UnidadTiempo
 from CriticRoute_API.src.core.entities.proyecto import Proyecto
 from CriticRoute_API.src.core.entities.tarea import Tarea, Responsable
+from CriticRoute_API.src.core.exceptions.invalid_excel_format_ex import InvalidExcelFormatEx
 from CriticRoute_API.src.core.use_cases.generar_cpm import GenerarCPM
 from CriticRoute_API.src.core.use_cases.grafo_cpm import GrafoCPM
 from CriticRoute_API.src.core.use_cases.impl.grafo_cpm_impl import NodoTarea
@@ -25,7 +26,12 @@ class GenerarCPMImpl(GenerarCPM):
         self._procesar_excel.set_file_bytes(file_bytes)
 
         # Extrae los datos del proyecto desde el archivo Excel
-        dic_proyecto = self._procesar_excel.extraer_datos_proyecto()
+        dic_proyecto = {}
+
+        try:
+            dic_proyecto = self._procesar_excel.extraer_datos_proyecto()
+        except Exception as ex:
+            raise InvalidExcelFormatEx(f'Error al extraer datos del proyecto: {str(ex)}')
 
         # Crea una nueva instancia de proyecto, asociada al usuario
         proyecto = Proyecto.empty(usuario)
@@ -37,7 +43,12 @@ class GenerarCPMImpl(GenerarCPM):
         proyecto.num_decimales = dic_proyecto['numero_decimales']
 
         # Procesa las actividades del proyecto desde el archivo Excel
-        tareas = self._procesar_excel.procesar_datos_actividades()
+        tareas = []
+
+        try:
+            tareas = self._procesar_excel.procesar_datos_actividades()
+        except Exception as ex:
+            raise InvalidExcelFormatEx(f'Error al procesar actividades: {str(ex)}')
 
         # Establece el proyecto en el grafo CPM
         self._grafo_cpm.set_proyecto(proyecto)
