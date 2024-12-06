@@ -1,5 +1,6 @@
 from typing import Dict, List, Tuple, Optional
 
+from django.contrib.auth.models import User
 from injector import inject
 
 from CriticRoute_API.src.core.entities.tarea import Tarea, Responsable
@@ -14,10 +15,10 @@ class BuscarProyectoPorIdImpl(BuscarProyectoPorId):
     def __init__(self, repository: ProyectoRepository):
         self._repository = repository
 
-    def execute(self, id_proyecto: int) -> Optional[ProyectoDTO]:
+    def execute(self, id_proyecto: int, usuario: User) -> Optional[ProyectoDTO]:
 
         # Recupera el proyecto desde el repositorio usando el ID
-        proyecto = self._repository.buscar_proyecto_por_id(id_proyecto)
+        proyecto = self._repository.buscar_proyecto_por_id(id_proyecto, usuario)
 
         if proyecto is None:
             return None
@@ -88,5 +89,32 @@ class BuscarProyectoPorIdImpl(BuscarProyectoPorId):
             )
 
             dto.tareas.append(tarea_dto)
+
+        # Recupera la tarea final del proyecto
+        tarea_final = self._repository.buscar_tarea_final(id_proyecto)
+
+        # Añadir la tarea final
+        dto.tareas.append(
+            TareaDTO(
+                id_tarea=tarea_final.id_tarea,
+                numero_tarea=tarea_final.numero_tarea,
+                accion=tarea_final.accion,
+                notas=tarea_final.descripcion,
+                tiempo_optimista=tarea_final.tiempo_optimista,
+                tiempo_probable=tarea_final.tiempo_probable,
+                tiempo_pesimista=tarea_final.tiempo_pesimista,
+                inicio_temprano=tarea_final.inicio_temprano,
+                duracion=tarea_final.duracion,
+                final_temprano=tarea_final.final_temprano,
+                inicio_tardio=tarea_final.inicio_tardio,
+                holgura=tarea_final.holgura,
+                final_tardio=tarea_final.final_tardio,
+                fecha_inicio=tarea_final.fecha_inicio,
+                fecha_final=tarea_final.fecha_final,
+                estado=tarea_final.estado.value,
+                responsables=[],
+                tareas_dependencias=[]
+            )
+        )
 
         return dto

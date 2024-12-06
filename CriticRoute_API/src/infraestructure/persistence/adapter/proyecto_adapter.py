@@ -185,12 +185,23 @@ class ProyectoAdapter(ProyectoRepository):
         responsables = TareaResponsableModel.objects.filter(tarea__proyecto__id_proyecto=id_proyecto)
         return self._mapper.to_list_tarea_responsable(responsables)
 
-    def buscar_proyecto_por_id(self, id_proyecto: int) -> Optional[Proyecto]:
+    def buscar_proyecto_por_id(self, id_proyecto: int, usuario: User) -> Optional[Proyecto]:
         try:
 
-            proyecto_model = ProyectoModel.objects.get(id_proyecto=id_proyecto)
+            proyecto_model = ProyectoModel.objects.get(
+                id_proyecto=id_proyecto,
+                usuario=usuario
+            )
 
         except ProyectoModel.DoesNotExist:
             return None
 
         return self._mapper.to_proyecto(proyecto_model)
+
+    def buscar_tarea_final(self, id_proyecto: int) -> Optional[Tarea]:
+        tarea = TareaModel.objects.get(
+            proyecto__id_proyecto=id_proyecto,
+            accion='Final'
+        )
+
+        return self._mapper.to_tarea(tarea)
