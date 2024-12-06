@@ -122,7 +122,8 @@ def get_buscar_proyectos(request, buscar_proyectos: BuscarProyectos, mapper_dto:
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_buscar_proyecto_id(request, id_proyecto: int, buscar_proyecto_por_id: BuscarProyectoPorId):
-    proyecto = buscar_proyecto_por_id.execute(id_proyecto)
+
+    proyecto = buscar_proyecto_por_id.execute(id_proyecto, request.user)
 
     if proyecto is None:
         return Response({'message': 'Proyecto no encontrado'}, status=status.HTTP_404_NOT_FOUND)

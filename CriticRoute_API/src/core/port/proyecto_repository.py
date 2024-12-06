@@ -119,14 +119,19 @@ class ProyectoRepository(ABC):
         pass
 
     @abstractmethod
-    def buscar_proyecto_por_id(self, id_proyecto: int) -> Optional[Proyecto]:
+    def buscar_proyecto_por_id(self, id_proyecto: int, usuario: User) -> Optional[Proyecto]:
         """
         Busca un proyecto por su identificador único (id_proyecto) y lo convierte en una entidad de Proyecto.
 
         Args:
             id_proyecto (int): El identificador único del proyecto que se desea buscar.
+            usuario (User): El usuario quien busca el proyecto
 
         Returns:
             Optional[Proyecto]: Una instancia de la entidad Proyecto, mapeada desde el modelo de datos.
         """
+        pass
+
+    @abstractmethod
+    def buscar_tarea_final(self, id_proyecto: int) -> Optional[Tarea]:
         pass
