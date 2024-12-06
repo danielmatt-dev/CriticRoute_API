@@ -34,7 +34,7 @@ class MapperDtoImpl(MapperDto):
 
     def to_usuario(self, data) -> Usuario:
         return Usuario(
-            id_usuario=data['id_usuario'],
+            id_usuario=None,
             email=data['email'],
             username=data['username'],
             password=data['password'],
