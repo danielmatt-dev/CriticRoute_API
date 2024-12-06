@@ -7,6 +7,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
+from CriticRoute_API.src.core.exceptions.invalid_excel_format_ex import InvalidExcelFormatEx
 from CriticRoute_API.src.core.use_cases.buscar_proyecto_por_id import BuscarProyectoPorId
 from CriticRoute_API.src.core.use_cases.buscar_proyectos import BuscarProyectos
 from CriticRoute_API.src.core.use_cases.generar_cpm import GenerarCPM
@@ -99,6 +100,10 @@ def post_nuevo_proyecto(request, generar_grafo: GenerarCPM, guardar_grafo: Guard
 
         return Response({'message': 'Proyecto guardado con éxito'}, status=status.HTTP_201_CREATED)
 
+    except InvalidExcelFormatEx as ex:
+        return Response({f'{ex.message}'}, status=status.HTTP_400_BAD_REQUEST)
+    except ValueError:
+        return Response({'Error al generar grafo'}, status=status.HTTP_400_BAD_REQUEST)
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 

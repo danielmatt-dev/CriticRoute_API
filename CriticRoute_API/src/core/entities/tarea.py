@@ -156,6 +156,7 @@ class Tarea:
             return self.numero_tarea == other.numero_tarea
         return False
 
+
 @dataclass
 class TareaDependencia:
     id_tarea_dependencia: Optional[int]
