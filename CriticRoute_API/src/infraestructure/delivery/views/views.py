@@ -1,7 +1,7 @@
 import base64
 
 from django.middleware.csrf import get_token
-from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -19,7 +19,7 @@ from CriticRoute_API.src.infraestructure.delivery.dto.response.auth_token import
 from CriticRoute_API.src.infraestructure.delivery.dto.response.dtos import ProyectoDTOSerializer
 
 
-@ensure_csrf_cookie
+@csrf_exempt
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def post_crear_usuario(request, verificar_usuario, crear_cuenta, mapper_dto):
@@ -66,7 +66,7 @@ def post_crear_usuario(request, verificar_usuario, crear_cuenta, mapper_dto):
     return response
 
 
-@ensure_csrf_cookie
+@csrf_exempt
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def post_nuevo_proyecto(request, generar_grafo: GenerarCPM, guardar_grafo: GuardarGrafoCPM):
