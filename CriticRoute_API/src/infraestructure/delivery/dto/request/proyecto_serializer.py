@@ -16,6 +16,7 @@ class ProyectoSerializer(serializers.Serializer):
     descripcion = serializers.CharField(
         min_length=0,
         max_length=255,
+        allow_blank=True,
         error_messages={
             'max_length': 'La descripción no puede tener más de 255 caracteres',
             'required': 'La descripción es obligatoria',

@@ -29,6 +29,8 @@ class GrafoCPMImpl(GrafoCPM):
 
     def set_proyecto(self, proyecto: Proyecto):
         self.__proyecto = proyecto
+        self.__tarea_inicial.tarea.fecha_inicio = self.__proyecto.fecha_inicio
+        self.__tarea_inicial.tarea.fecha_final = self.__proyecto.fecha_inicio
 
     def agregar_tarea(self, tarea: Tarea):
 
