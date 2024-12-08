@@ -74,7 +74,7 @@ class ProcesadorExcelImpl(ProcesadorExcel):
             InvalidExcelFormatEx: Si el ID de la tarea ya ha sido utilizado.
         """
         if id_tarea and id_tarea in self.ids_tareas:
-            raise InvalidExcelFormatEx(f'El ID {id_tarea} ya ha sido utilizado. Los IDs deben ser únicos.')
+            raise InvalidExcelFormatEx(f'El ID {id_tarea} ya ha sido utilizado, los IDs deben ser únicos')
 
         if id_tarea:
             self.ids_tareas.add(id_tarea)
