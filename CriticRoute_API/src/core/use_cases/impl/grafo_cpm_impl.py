@@ -203,9 +203,19 @@ class GrafoCPMImpl(GrafoCPM):
 
     def get_nodos(self) -> Dict[int, NodoTarea]:
 
+        # Configura el proyecto para las tareas inicial y final
         self.__tarea_inicial.tarea.proyecto = self.__proyecto
         self.__tarea_final.tarea.proyecto = self.__proyecto
 
+        # Encuentra la fecha final más grande entre todas las tareas
+        fecha_final_mas_grande = max(
+            nodo.tarea.fecha_final for nodo in self.__nodos.values()
+        )
+        # Asigna esta fecha como inicio y fin de la tarea final
+        self.__tarea_final.tarea.fecha_inicio = fecha_final_mas_grande
+        self.__tarea_final.tarea.fecha_final = fecha_final_mas_grande
+
+        # Agrega las tareas inicial y final al diccionario de nodos
         self.__nodos[self.__tarea_inicial.tarea.numero_tarea] = self.__tarea_inicial
         self.__nodos[self.__tarea_final.tarea.numero_tarea] = self.__tarea_final
 

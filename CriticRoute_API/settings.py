@@ -163,7 +163,8 @@ CSRF_COOKIE_SECURE = False
 CSRF_TRUSTED_ORIGINS = ['http://localhost:4200']
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:4200'
+    'http://localhost:4200',
+    'http://localhost:9876',
 ]
 
 CORS_ALLOW_METHODS = [
